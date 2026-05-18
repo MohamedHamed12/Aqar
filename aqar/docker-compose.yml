@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgis/postgis:15-3.4
+    container_name: aqar-postgres
+    environment:
+      POSTGRES_DB: aqar
+      POSTGRES_USER: aqar
+      POSTGRES_PASSWORD: aqar
+    ports:
+      - "5432:5432"
+    volumes:
+      - aqar_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  aqar_postgres_data:
