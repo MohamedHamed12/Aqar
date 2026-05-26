@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:aqar;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+  flyway:
+    enabled: false
+
+app:
+  security:
+    jwt:
+      issuer: aqar-test
+      secret: test-secret-test-secret-test-secret-test-secret-test-secret
+      access-token-ttl: 15m
+    refresh-token:
+      ttl: 7d

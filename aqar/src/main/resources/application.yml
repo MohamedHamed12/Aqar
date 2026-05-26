@@ -19,5 +19,14 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+app:
+  security:
+    jwt:
+      issuer: aqar
+      secret: change-this-development-secret-to-a-long-random-value-change-this-development-secret
+      access-token-ttl: 15m
+    refresh-token:
+      ttl: 7d
+
 server:
   port: 8080
