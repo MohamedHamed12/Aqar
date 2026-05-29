@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 JwtService.Claims claims = jwtService.verify(token);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        claims.sub, null, List.of(new SimpleGrantedAuthority(claims.role)));
+                    claims.sub, null, List.of(new SimpleGrantedAuthority("ROLE_" + claims.role)));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

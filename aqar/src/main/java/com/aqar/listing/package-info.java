@@ -1,10 +1,10 @@
 /**
- * Listing module — owns Listing entities, repositories, services, and controllers.
+ * Listing module — owns listings, listing images, and listing lifecycle APIs.
  *
  * Responsibilities:
- * - Domain: Listing, PriceHistory, ListingImages
- * - Publish events to outbox on create/update/delete
- * - Provide services used by other modules via interfaces only
+ * - Listing CRUD and status transitions
+ * - Ownership checks and agent-scoped queries
+ * - DTO mapping and outbox publishing on create
  *
  * See docs/architecture/ARCHITECTURE_STYLE.md for architecture guidelines.
  */

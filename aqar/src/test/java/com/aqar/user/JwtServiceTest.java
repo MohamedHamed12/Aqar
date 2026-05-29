@@ -14,4 +14,13 @@ public class JwtServiceTest {
         Assertions.assertEquals(42L, claims.sub.longValue());
         Assertions.assertEquals("ROLE_USER", claims.role);
     }
+
+    @Test
+    public void verifyRejectsTamperedToken() {
+        JwtService svc = new JwtService("test-secret-123", 60);
+        String token = svc.createAccessToken(42L, "ROLE_USER");
+        String tampered = token.substring(0, token.length() - 1) + "A";
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> svc.verify(tampered));
+    }
 }
