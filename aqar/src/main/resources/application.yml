@@ -20,6 +20,8 @@ spring:
     locations: classpath:db/migration
 
 app:
+  dropbox:
+    access-token: sl.dummy_token_for_local_dev
   security:
     jwt:
       issuer: aqar

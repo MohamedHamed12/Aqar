@@ -86,11 +86,11 @@ VALUES
     )
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO listing_images (id, listing_id, s3_key, thumbnail_key, display_order, created_at)
+INSERT INTO listing_images (id, listing_id, dropbox_path, thumbnail_path, display_order, created_at)
 VALUES
-    (1, 1, 'demo/listings/1/hero.jpg', 'demo/listings/1/hero-thumb.jpg', 0, NOW() - INTERVAL '10 days'),
-    (2, 1, 'demo/listings/1/living-room.jpg', 'demo/listings/1/living-room-thumb.jpg', 1, NOW() - INTERVAL '10 days'),
-    (3, 2, 'demo/listings/2/hero.jpg', 'demo/listings/2/hero-thumb.jpg', 0, NOW() - INTERVAL '9 days')
+    (1, 1, '/Apps/Aqar/demo/listings/1/hero.jpg', '/Apps/Aqar/demo/listings/1/hero-thumb.jpg', 0, NOW() - INTERVAL '10 days'),
+    (2, 1, '/Apps/Aqar/demo/listings/1/living-room.jpg', '/Apps/Aqar/demo/listings/1/living-room-thumb.jpg', 1, NOW() - INTERVAL '10 days'),
+    (3, 2, '/Apps/Aqar/demo/listings/2/hero.jpg', '/Apps/Aqar/demo/listings/2/hero-thumb.jpg', 0, NOW() - INTERVAL '9 days')
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO price_history (id, listing_id, price, recorded_at)
