@@ -29,11 +29,11 @@ public class ListingImageEntity {
     @JoinColumn(name = "listing_id", nullable = false)
     private ListingEntity listing;
 
-    @Column(name = "s3_key", nullable = false, length = 512)
-    private String s3Key;
+    @Column(name = "dropbox_path", nullable = false, length = 512)
+    private String dropboxPath;
 
-    @Column(name = "thumbnail_key", length = 512)
-    private String thumbnailKey;
+    @Column(name = "thumbnail_path", length = 512)
+    private String thumbnailPath;
 
     @Column(name = "display_order", nullable = false)
     private Integer displayOrder = 0;
