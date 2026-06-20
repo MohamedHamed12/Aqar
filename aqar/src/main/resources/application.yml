@@ -43,3 +43,13 @@ app:
 
 server:
   port: 8080
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+  show-actuator: false
+  cache:
+    disabled: true
+  paths-to-exclude: /error
