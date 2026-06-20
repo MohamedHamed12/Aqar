@@ -1,8 +1,8 @@
 package com.aqar.listing.dto;
 
 public record ListingImageResponse(
-        String s3Key,
-        String thumbnailKey,
+        String dropboxPath,
+        String thumbnailPath,
         Integer displayOrder
 ) {
 }

@@ -1,7 +1,11 @@
 package com.aqar.shared.error;
 
+import com.aqar.listing.exception.ImageLockAcquisitionException;
+import com.aqar.listing.exception.ImageNotFoundException;
+import com.aqar.listing.exception.InvalidImageException;
 import com.aqar.listing.exception.ListingNotFoundException;
 import com.aqar.listing.exception.ListingStateTransitionException;
+import com.aqar.listing.exception.MaxImagesExceededException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -40,6 +44,26 @@ public class GlobalRestControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException exception) {
         return ResponseEntity.badRequest().body(error("bad_request", exception.getMessage(), List.of()));
+    }
+
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleImageNotFound(ImageNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error("not_found", exception.getMessage(), List.of()));
+    }
+
+    @ExceptionHandler(InvalidImageException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidImage(InvalidImageException exception) {
+        return ResponseEntity.badRequest().body(error("invalid_image", exception.getMessage(), List.of()));
+    }
+
+    @ExceptionHandler(MaxImagesExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxImagesExceeded(MaxImagesExceededException exception) {
+        return ResponseEntity.badRequest().body(error("max_images_exceeded", exception.getMessage(), List.of()));
+    }
+
+    @ExceptionHandler(ImageLockAcquisitionException.class)
+    public ResponseEntity<ErrorResponse> handleImageLockAcquisition(ImageLockAcquisitionException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error("lock_contention", exception.getMessage(), List.of()));
     }
 
     @ExceptionHandler(Exception.class)

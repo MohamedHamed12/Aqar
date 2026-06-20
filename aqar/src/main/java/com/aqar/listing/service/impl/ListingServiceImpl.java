@@ -41,7 +41,7 @@ public class ListingServiceImpl implements ListingService {
     @Override
     public ListingDetailResponse create(Long ownerId, CreateListingRequest request) {
         ListingEntity listing = new ListingEntity();
-        applyRequest(listing, ownerId, request.title(), request.content(), request.neighborhoodId(), request.purpose(), request.type(), request.price(), request.areaSqm(), request.bedrooms(), request.latitude(), request.longitude(), request.imageKeys());
+        applyRequest(listing, ownerId, request.title(), request.content(), request.neighborhoodId(), request.purpose(), request.type(), request.price(), request.areaSqm(), request.bedrooms(), request.latitude(), request.longitude(), request.imagePaths());
         listing.setStatus(ListingStatus.DRAFT);
         ListingEntity saved = listingRepository.save(listing);
         outboxPublisher.publish(new ListingCreatedEvent(saved.getId(), saved.getOwnerId(), saved.getNeighborhoodId(), saved.getTitle(), saved.getCreatedAt()));
@@ -57,7 +57,7 @@ public class ListingServiceImpl implements ListingService {
     @Override
     public ListingDetailResponse update(Long id, UpdateListingRequest request) {
         ListingEntity listing = findListing(id);
-        applyRequest(listing, listing.getOwnerId(), request.title(), request.content(), request.neighborhoodId(), request.purpose(), request.type(), request.price(), request.areaSqm(), request.bedrooms(), request.latitude(), request.longitude(), request.imageKeys());
+        applyRequest(listing, listing.getOwnerId(), request.title(), request.content(), request.neighborhoodId(), request.purpose(), request.type(), request.price(), request.areaSqm(), request.bedrooms(), request.latitude(), request.longitude(), request.imagePaths());
         ListingEntity saved = listingRepository.save(listing);
         return listingMapper.toDetailResponse(saved);
     }
@@ -114,7 +114,7 @@ public class ListingServiceImpl implements ListingService {
                               Integer bedrooms,
                               java.math.BigDecimal latitude,
                               java.math.BigDecimal longitude,
-                              List<String> imageKeys) {
+                              List<String> imagePaths) {
         listing.setOwnerId(ownerId);
         listing.setTitle(title);
         listing.setContent(content);
@@ -126,18 +126,18 @@ public class ListingServiceImpl implements ListingService {
         listing.setBedrooms(bedrooms);
         listing.setLatitude(latitude);
         listing.setLongitude(longitude);
-        listing.setImages(buildImages(listing, imageKeys));
+        listing.setImages(buildImages(listing, imagePaths));
     }
 
-    private List<ListingImageEntity> buildImages(ListingEntity listing, List<String> imageKeys) {
+    private List<ListingImageEntity> buildImages(ListingEntity listing, List<String> imagePaths) {
         List<ListingImageEntity> images = new ArrayList<>();
-        if (imageKeys == null) {
+        if (imagePaths == null) {
             return images;
         }
-        for (int index = 0; index < imageKeys.size(); index++) {
+        for (int index = 0; index < imagePaths.size(); index++) {
             ListingImageEntity image = new ListingImageEntity();
             image.setListing(listing);
-            image.setS3Key(imageKeys.get(index));
+            image.setDropboxPath(imagePaths.get(index));
             image.setDisplayOrder(index);
             images.add(image);
         }

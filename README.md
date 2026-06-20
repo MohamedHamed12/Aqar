@@ -17,7 +17,7 @@ Aqar solves these problems with:
 - Arabic and English full-text search using Elasticsearch
 - Saved search alerts for matching new listings
 - Neighborhood price analytics and price-per-square-meter insights
-- Image upload and processing through AWS S3
+- Image upload and storage through Dropbox
 - Event-driven indexing, alerts, and analytics using Kafka
 - Production-ready architecture with caching, observability, CI/CD, and cloud deployment support
 
@@ -105,8 +105,8 @@ Aqar solves these problems with:
 - AWS RDS PostgreSQL
 - AWS ElastiCache Redis
 - Amazon MSK
-- AWS S3
-- CloudFront
+- Dropbox API (image storage)
+- Dropbox shared links (image serving)
 - Application Load Balancer
 - Route 53
 
@@ -161,7 +161,7 @@ Spring Boot Application
   ├── Elasticsearch
   ├── Redis
   ├── Kafka
-  └── AWS S3
+  └── Dropbox
 ```
 
 ---
@@ -238,8 +238,10 @@ PATCH  /api/v1/listings/{id}/status
 ### Images
 
 ```http
-GET  /api/v1/listings/{id}/images/upload-url
+POST /api/v1/listings/{id}/images/upload
 POST /api/v1/listings/{id}/images/confirm
+DELETE /api/v1/listings/{id}/images/{imageId}
+PATCH /api/v1/listings/{id}/images/order
 ```
 
 ### Search
@@ -363,10 +365,7 @@ KAFKA_BOOTSTRAP_SERVERS=
 
 ELASTICSEARCH_URIS=
 
-AWS_REGION=
-AWS_S3_BUCKET=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
+DROPBOX_ACCESS_TOKEN=
 ```
 
 ---

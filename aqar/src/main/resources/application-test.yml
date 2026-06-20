@@ -19,3 +19,8 @@ app:
       access-token-ttl: 15m
     refresh-token:
       ttl: 7d
+
+  dropbox:
+    access-token: mock-token
+    app-folder: /Apps/Aqar
+    shared-link-ttl: 4h

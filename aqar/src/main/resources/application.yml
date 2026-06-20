@@ -19,6 +19,11 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
 app:
   security:
     jwt:
@@ -27,6 +32,14 @@ app:
       access-token-ttl: 15m
     refresh-token:
       ttl: 7d
+
+  dropbox:
+    access-token: ${DROPBOX_ACCESS_TOKEN:}
+    app-folder: /Apps/Aqar
+    shared-link-ttl: 4h
+
+  redis:
+    lock-ttl: 5000
 
 server:
   port: 8080
