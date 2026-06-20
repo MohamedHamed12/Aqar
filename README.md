@@ -282,48 +282,43 @@ GET /api/v1/listings/{id}/price-history
 * Docker
 * Docker Compose
 
-### Clone the Repository
+### Quick Start (everything in Docker)
 
 ```bash
 git clone https://github.com/MohamedHamed12/Aqar
 cd aqar
+cp .env.example .env
+docker compose up --build
 ```
 
-### Start Dependencies
+The API is available at `http://localhost:8080`.
+
+| Endpoint | URL |
+|---|---|
+| API | `http://localhost:8080` |
+| Swagger UI | `http://localhost:8080/swagger-ui.html` |
+| Health check | `http://localhost:8080/actuator/health` |
+
+### Faster Dev Loop (app on host, deps in Docker)
 
 ```bash
-docker compose up -d
-```
-
-Expected local services:
-
-* PostgreSQL with PostGIS
-* Redis
-* Kafka
-* Elasticsearch
-
-### Run the Application
-
-```bash
+docker compose up -d postgres redis
 mvn spring-boot:run
 ```
 
-The API should be available at:
+This starts only PostgreSQL and Redis in Docker while the app runs directly on your machine with hot reload. The `application.yml` defaults point at `localhost` so no env file is needed.
 
-```text
-http://localhost:8080
-```
+### Configuration
 
-Swagger UI:
+Copy `.env.example` to `.env` and adjust as needed. The `.env` file is loaded automatically by Docker Compose and is git-ignored.
 
-```text
-http://localhost:8080/swagger-ui.html
-```
+Key environment variables:
 
-Health check:
-
-```text
-http://localhost:8080/actuator/health
+```env
+SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/aqar
+REDIS_HOST=redis
+APP_SECURITY_JWT_SECRET=change-this-to-a-long-random-secret-in-production
+DROPBOX_ACCESS_TOKEN=    # optional for local dev
 ```
 
 ---
