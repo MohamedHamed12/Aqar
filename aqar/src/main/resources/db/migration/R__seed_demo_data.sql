@@ -106,3 +106,12 @@ VALUES
     (3, 1, NOW() - INTERVAL '1 day'),
     (3, 2, NOW() - INTERVAL '1 day')
 ON CONFLICT (user_id, listing_id) DO NOTHING;
+
+-- Sync sequences after seeding with explicit IDs so new rows don't collide
+SELECT setval('users_id_seq',            (SELECT COALESCE(MAX(id), 0) FROM users));
+SELECT setval('agent_profiles_id_seq',   (SELECT COALESCE(MAX(id), 0) FROM agent_profiles));
+SELECT setval('cities_id_seq',           (SELECT COALESCE(MAX(id), 0) FROM cities));
+SELECT setval('neighborhoods_id_seq',    (SELECT COALESCE(MAX(id), 0) FROM neighborhoods));
+SELECT setval('listings_id_seq',         (SELECT COALESCE(MAX(id), 0) FROM listings));
+SELECT setval('listing_images_id_seq',   (SELECT COALESCE(MAX(id), 0) FROM listing_images));
+SELECT setval('price_history_id_seq',    (SELECT COALESCE(MAX(id), 0) FROM price_history));
